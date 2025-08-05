@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax scroll</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .parallax-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 120vh;
+            will-change: transform;
+        }
+
+        .layer-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1;
+        }
+
+        .layer-mid {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            background-size: 100px 100px;
+            z-index: 2;
+        }
+
+        .layer-front {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section {
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section {
+            margin-bottom: 100px;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #666;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .section.in-view h2,
+        .section.in-view p {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-1 {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 60px;
+            height: 60px;
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .parallax-bg-2 {
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .parallax-bg-2 .content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+
+        .parallax-bg-2 h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .wave-pattern {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.1)"/></svg>') repeat-x;
+            background-size: 1200px 120px;
+            will-change: transform;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .content-section {
+                padding: 50px 20px;
+            }
+            .section h2 {
+                font-size: 2rem;
+            }
+            .section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-container">
+        <div class="parallax-layer layer-back" data-speed="0.2"></div>
+        <div class="parallax-layer layer-mid" data-speed="0.5"></div>
+        <div class="parallax-layer layer-front" data-speed="0.8">
+            <div class="hero-content">
+                <h1 class="hero-title">Parallax Magic</h1>
+                <p class="hero-subtitle">Scroll to experience the depth</p>
+            </div>
+        </div>
+        
+        <div class="floating-elements">
+            <div class="floating-circle circle-1"></div>
+            <div class="floating-circle circle-2"></div>
+            <div class="floating-circle circle-3"></div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="section">
+            <h2>Smooth Scrolling</h2>
+            <p>This parallax effect creates depth by moving background elements at different speeds relative to the scroll position. The layers move at varying velocities to create a three-dimensional illusion that draws the viewer deeper into the content.</p>
+        </div>
+
+        <div class="section">
+            <h2>Performance Optimized</h2>
+            <p>Using transform3d and will-change properties ensures smooth 60fps animations by leveraging hardware acceleration. The effect is optimized for modern browsers while maintaining compatibility across different devices and screen sizes.</p>
+        </div>
+
+        <div class="section">
+            <h2>Responsive Design</h2>
+            <p>The parallax effect adapts seamlessly to different screen sizes and orientations. On mobile devices, the effect is optimized to prevent performance issues while maintaining the visual impact of the layered scrolling experience.</p>
+        </div>
+    </div>
+
+    <div class="parallax-bg-2">
+        <div class="wave-pattern" data-speed="0.3"></div>
+        <div class="content">
+            <h2>Another Layer</h2>
+            <p>Multiple parallax sections create a rich, immersive experience</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="section">
+            <h2>Endless Possibilities</h2>
+            <p>Parallax scrolling opens up creative possibilities for storytelling and user engagement. By controlling the speed and direction of different elements, you can guide the user's attention and create memorable interactive experiences that stand out from static designs.</p>
+        </div>
+    </div>
+
+    <script>
+        class ParallaxController {
+            constructor() {
+                this.parallaxElements = document.querySelectorAll('[data-speed]');
+                this.sections = document.querySelectorAll('.section');
+                this.floatingElements = document.querySelectorAll('.floating-circle');
+                this.wavePattern = document.querySelector('.wave-pattern');
+                
+                this.ticking = false;
+                this.scrollY = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.addEventListeners();
+                this.updateParallax();
+                this.checkSections();
+            }
+
+            addEventListeners() {
+                window.addEventListener('scroll', this.handleScroll.bind(this), { passive: true });
+                window.addEventListener('resize', this.handleResize.bind(this));
+            }
+
+            handleScroll() {
+                this.scrollY = window.pageYOffset;
+                
+                if (!this.ticking) {
+                    requestAnimationFrame(() => {
+                        this.updateParallax();
+                        this.updateFloatingElements();
+                        this.updateWavePattern();
+                        this.checkSections();
+                        this.ticking = false;
+                    });
+                    this.ticking = true;
+                }
+            }
+
+            handleResize() {
+                // Recalculate positions on resize
+                this.updateParallax();
+                this.checkSections();
+            }
+
+            updateParallax() {
+                this.parallaxElements.forEach(element => {
+                    const speed = parseFloat(element.dataset.speed);
+                    const yPos = -(this.scrollY * speed);
+                    element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+                });
+            }
+
+            updateFloatingElements() {
+                this.floatingElements.forEach((element, index) => {
+                    const speed = 0.1 + (index * 0.05);
+                    const yPos = this.scrollY * speed;
+                    const rotation = this.scrollY * (0.02 + index * 0.01);
+                    element.style.transform = `translate3d(0, ${yPos}px, 0) rotate(${rotation}deg)`;
+                });
+            }
+
+            updateWavePattern() {
+                if (this.wavePattern) {
+                    const speed = parseFloat(this.wavePattern.dataset.speed) || 0.3;
+                    const xPos = -(this.scrollY * speed * 0.5);
+                    this.wavePattern.style.transform = `translate3d(${xPos}px, 0, 0)`;
+                }
+            }
+
+            checkSections() {
+                this.sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+                    
+                    if (isVisible && !section.classList.contains('in-view')) {
+                        section.classList.add('in-view');
+                    }
+                });
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ParallaxController();
+        });
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
