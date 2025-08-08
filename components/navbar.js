@@ -18,13 +18,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <!-- Desktop Menu -->
         <ul
-          class="hidden md:flex items-center gap-3 lg:gap-6 text-gray-800 font-medium text-sm lg:text-base"
+          class="hidden md:flex items-center gap-2 text-gray-800 font-medium text-sm lg:text-base"
         >
           <li>
             <a
               href="/"
               class="px-3 py-2 rounded-lg hover:bg-white/20 hover:text-green-600 transition-all duration-300"
               >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/pages/education.html"
+              class="px-3 py-2 rounded-lg hover:bg-white/20 hover:text-green-600 transition-all duration-300"
+              >Education</a
             >
           </li>
           <li>
@@ -41,20 +48,20 @@ document.addEventListener("DOMContentLoaded", () => {
               >Challenge</a
             >
           </li>
-          <li>
+          <li class="flex items-center gap-2">
             <a
               href="/pages/marketplace.html"
               class="px-3 py-2 rounded-lg hover:bg-white/20 hover:text-green-600 transition-all duration-300"
-              >Marketplace</a
+              ><img src='/public/svg/cart.svg'></img></a
             >
+            <a href="/pages/profile.html" class="ml-2">
+              <img
+                src="/public/img/pfp.jpeg"
+                class="w-8 h-8 lg:w-10 lg:h-10 rounded-full hover:scale-110 transition-transform duration-300 ring-2 ring-white/30"
+                alt="pfp"
+              />
+            </a>
           </li>
-          <a href="/pages/profile.html" class="ml-2">
-            <img
-              src="public/img/pfp.jpeg"
-              class="w-8 h-8 lg:w-10 lg:h-10 rounded-full hover:scale-110 transition-transform duration-300 ring-2 ring-white/30"
-              alt="pfp"
-            />
-          </a>
         </ul>
 
         <!-- Mobile Menu Button -->
@@ -96,28 +103,35 @@ document.addEventListener("DOMContentLoaded", () => {
         >
           <li>
             <a
-              href="#"
+              href="/"
               class="block py-3 px-4 rounded-xl hover:bg-white/20 hover:text-green-600 transition-all duration-300 backdrop-blur-sm"
               >Home</a
             >
           </li>
           <li>
             <a
-              href="#"
+              href="/pages/education.html"
+              class="block py-3 px-4 rounded-xl hover:bg-white/20 hover:text-green-600 transition-all duration-300 backdrop-blur-sm"
+              >Education</a
+            >
+          </li>
+          <li>
+            <a
+              href="/pages/community.html"
               class="block py-3 px-4 rounded-xl hover:bg-white/20 hover:text-green-600 transition-all duration-300 backdrop-blur-sm"
               >Community</a
             >
           </li>
           <li>
             <a
-              href="#"
+              href="/pages/challenge.html"
               class="block py-3 px-4 rounded-xl hover:bg-white/20 hover:text-green-600 transition-all duration-300 backdrop-blur-sm"
               >Challenge</a
             >
           </li>
           <li>
             <a
-              href="#"
+              href="/pages/marketplace.html"
               class="block py-3 px-4 rounded-xl hover:bg-white/20 hover:text-green-600 transition-all duration-300 backdrop-blur-sm"
               >Marketplace</a
             >
@@ -138,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
             >
               <div class="relative">
                 <img
-                  src="public/img/pfp.jpeg"
+                  src="/public/img/pfp.jpeg"
                   class="w-10 h-10 sm:w-12 sm:h-12 rounded-full ring-2 ring-white/40 shadow-lg"
                   alt="pfp"
                 />
