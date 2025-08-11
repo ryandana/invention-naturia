@@ -49,7 +49,7 @@
     <div class="container mx-auto px-4 py-12">
       <!-- Hero -->
       <header
-        class="text-center mb-12 rounded-2xl p-8 mx-4 bg-white/60 backdrop-blur-sm border border-white/40"
+        class="text-center mb-6 rounded-2xl px-8 py-28 mx-4 bg-white/60 backdrop-blur-sm border border-white/40"
       >
         <h1 class="text-5xl font-bold text-volcano-red mb-4">Marketplace</h1>
         <p class="text-dark-gray text-lg max-w-2xl mx-auto">
@@ -481,6 +481,102 @@
           description:
             "Tempat pensil lucu dari kaleng bekas dengan dekorasi menarik. Solusi praktis untuk mengorganisir alat tulis dengan gaya eco-friendly.",
         },
+        {
+    id: 9,
+    name: "Organizer Serbaguna Kardus Bekas",
+    price: 45000,
+    category: "home",
+    image: "https://images.unsplash.com/photo-1581579185169-3c1c7b4d9c3d",
+    description: "Organizer minimalis dari kardus bekas, cocok untuk menyimpan dokumen, alat tulis, atau aksesoris kecil. Ringan, praktis, dan ramah lingkungan.",
+  },
+  {
+    id: 10,
+    name: "Dompet Kain Denim Bekas",
+    price: 65000,
+    category: "fashion",
+    image: "https://images.unsplash.com/photo-1585386959984-a415522b831c",
+    description: "Dompet handmade dari potongan denim bekas. Tampil stylish dengan nuansa vintage dan mendukung gaya hidup berkelanjutan.",
+  },
+  {
+    id: 11,
+    name: "Vas Bunga Botol Kaca",
+    price: 40000,
+    category: "home",
+    image: "https://images.unsplash.com/photo-1583337130417-3346a1f2b1a5",
+    description: "Vas cantik dari botol kaca bekas dengan sentuhan artistik. Cocok untuk bunga segar atau dekorasi meja.",
+  },
+  {
+    id: 12,
+    name: "Rak Dinding Kayu Bekas",
+    price: 295000,
+    category: "furniture",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    description: "Rak dinding dari kayu bekas dengan finishing rustic. Ideal untuk memajang tanaman kecil, buku, atau dekorasi.",
+  },
+  {
+    id: 13,
+    name: "Tas Selempang Banner Vinyl",
+    price: 120000,
+    category: "fashion",
+    image: "https://images.unsplash.com/photo-1618354691228-7f5f3b5b2e5e",
+    description: "Tas selempang unik dari banner vinyl bekas. Tahan air dan cocok untuk aktivitas outdoor dengan gaya edgy.",
+  },
+  {
+    id: 14,
+    name: "Tempat Sabun Kaleng Susu",
+    price: 30000,
+    category: "home",
+    image: "https://images.unsplash.com/photo-1581579185169-3c1c7b4d9c3d",
+    description: "Tempat sabun dari kaleng susu bekas, dihias dengan motif retro. Tambahan quirky untuk kamar mandi kamu.",
+  },
+  {
+    id: 15,
+    name: "Pot Gantung Botol Plastik",
+    price: 28000,
+    category: "garden",
+    image: "https://images.unsplash.com/photo-1592928307033-7b3c5f3e3f3e",
+    description: "Pot gantung dari botol plastik bekas, cocok untuk tanaman hias kecil. Solusi hemat ruang dan ramah lingkungan.",
+  },
+  {
+    id: 16,
+    name: "Lampu Meja Kaleng Cat",
+    price: 185000,
+    category: "home",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    description: "Lampu meja dari kaleng cat bekas dengan desain industrial. Memberikan nuansa kreatif untuk ruang kerja.",
+  },
+  {
+    id: 17,
+    name: "Gelang Kain Perca",
+    price: 45000,
+    category: "fashion",
+    image: "https://images.unsplash.com/photo-1618354691228-7f5f3b5b2e5e",
+    description: "Gelang handmade dari kain perca warna-warni. Aksesori ringan yang penuh karakter dan ramah lingkungan.",
+  },
+  {
+    id: 18,
+    name: "Kursi Lipat Kayu Bekas",
+    price: 340000,
+    category: "furniture",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    description: "Kursi lipat dari kayu bekas dengan desain ergonomis. Cocok untuk ruang tamu atau balkon kecil.",
+  },
+  {
+    id: 19,
+    name: "Tempat Tisu Rol Kertas",
+    price: 25000,
+    category: "home",
+    image: "https://images.unsplash.com/photo-1583337130417-3346a1f2b1a5",
+    description: "Tempat tisu dari rol kertas bekas, dihias dengan motif lucu. Tambahan fungsional dan eco-friendly untuk meja makan.",
+  },
+  {
+    id: 20,
+    name: "Tanaman Hias Botol Bekas",
+    price: 22000,
+    category: "garden",
+    image: "https://images.unsplash.com/photo-1592928307033-7b3c5f3e3f3e",
+    description: "Tanaman hias mini dalam botol bekas, cocok untuk meja kerja atau rak buku. Hadiah kecil yang penuh makna.",
+  }
       ];
 
       let cart = [];
@@ -688,7 +784,6 @@
         checkoutPage.classList.add("pointer-events-none");
       }
 
-      // Category filter: pass element so we can toggle active classes via JS
       function filterProducts(category, el) {
         currentFilter = category;
         document.querySelectorAll(".category-btn").forEach((btn) => {

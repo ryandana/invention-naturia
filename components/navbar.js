@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `
     <nav
       id="navbar"
-      class="fixed top-2 sm:top-3 md:top-4 left-1/2 z-50 w-[95%] sm:w-[90%] md:w-full max-w-3xl sm:max-w-4xl md:max-w-6xl px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-white/20 backdrop-blur-xl shadow-2xl shadow-black/10 rounded-2xl sm:rounded-xl md:rounded-xl border border-white/30 transition-all duration-600 ease-in-out"
+      class="fixed top-2 sm:top-3 md:top-4 left-1/2 z-50 w-[95%] sm:w-[90%] md:w-full max-w-3xl sm:max-w-4xl md:max-w-6xl px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-white/20 backdrop-blur-xl shadow-2xl shadow-black/10 rounded-2xl sm:rounded-xl md:rounded-xl border border-white/30 transition-all duration-600 ease-in-out animate-navbarEntrance"
       style="
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
