@@ -150,12 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <!-- Profile section with glass card -->
           <li>
             <a
-              href="pages/profile.html"
+              href="../pages/profile.html"
               class="flex items-center gap-3 p-4 rounded-xl bg-white/10 hover:bg-white/20 hover:text-green-600 transition-all duration-300 backdrop-blur-sm border border-white/20"
             >
               <div class="relative">
                 <img
-                  src="/public/img/pfp.jpeg"
+                  src="../public/img/pfp.jpeg"
                   class="w-10 h-10 sm:w-12 sm:h-12 rounded-full ring-2 ring-white/40 shadow-lg"
                   alt="pfp"
                 />
