@@ -149,9 +149,9 @@ document.addEventListener("DOMContentLoaded", () => {
               class="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
             ></div>
           </li>
-          <li>
+          <li class="flex justify-between">
             <a
-              href="./profile.html"
+              href="../pages/profile.html"
               class="flex items-center gap-3 p-4 rounded-xl bg-white/10 hover:bg-white/20 hover:text-green-600 transition-all duration-300 backdrop-blur-sm border border-white/20"
             >
               <div class="relative">
@@ -169,6 +169,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="text-xs opacity-70">View your account</span>
               </div>
             </a>
+            <div class="ml-2 flex gap-x-1 items-center">
+              <p class="font-semibold text-[1.1rem] animated-text">171</p>
+              <img class="w-8 h-8" src="../public/img/point.png" />
+            </div>
           </li>
         </ul>
       </div>
