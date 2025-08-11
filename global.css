@@ -276,12 +276,15 @@
 .skill-progress[data-progress="95"] {
   --progress-width: 95%;
 }
-.skill-progress[data-progress="88"] {
-  --progress-width: 88%;
+.skill-progress[data-progress="70"] {
+  --progress-width: 70%;
 }
 .skill-progress[data-progress="92"] {
   --progress-width: 92%;
 }
 .skill-progress[data-progress="78"] {
   --progress-width: 78%;
+}
+.skill-progress[data-progress="100"] {
+  --progress-width: 100%;
 }
