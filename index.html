@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="./global.css" />
-    <script src="./components/navbar.js"></script>
+    <script src="./components/navbar-jsonly.js"></script>
   </head>
   <body>
      <nav
@@ -22,7 +22,7 @@
     >
       <!-- Desktop & Mobile Header -->
       <div class="flex items-center justify-between w-full">
-        <a href="./index.html" class="flex items-center gap-x-2 text-base sm:text-lg md:text-xl font-bold text-gray-800">
+        <a href="./index.html" class="flex items-center gap-x-1 text-base sm:text-lg md:text-xl font-bold text-gray-800">
         <img src="./public/img/logo.png" class="w-10 h-10"></img>
           Naturia
         </a>
@@ -61,17 +61,23 @@
           </li>
           <li class="flex items-center gap-2">
             <a
-              href="./pages/marketplace.html"
+              href="./marketplace.html"
               class="px-3 py-2 rounded-lg hover:bg-white/20 hover:text-green-600 transition-all duration-300"
-              ><img src='./public/svg/cart.svg'></img></a
+              ><img src='../public/svg/cart.svg'></img></a
             >
-            <a href="./pages/profile.html" class="ml-2">
+          <div class="flex gap-x-2 items-center">
+            <a href="./profile.html">
               <img
-                src="./public/img/pfp.jpeg"
-                class="w-8 h-8 lg:w-10 lg:h-10 rounded-full hover:scale-110 transition-transform duration-300 ring-2 ring-white/30"
+                src="../public/img/pfp.jpeg"
+                class="w-10 h-10 lg:w-10 lg:h-10 rounded-full hover:scale-110 transition-transform duration-300 ring-2 ring-white/30"
                 alt="pfp"
               />
-            </a>
+              </a>
+              <div class="ml-2 flex gap-x-1 items-center">
+              <p class="font-semibold text-[1.1rem] animated-text">171</p>
+                <img class="w-8 h-8" src="../public/img/point.png"></img>
+              </div>
+            </div>
           </li>
         </ul>
 
@@ -154,8 +160,6 @@
               class="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
             ></div>
           </li>
-
-          <!-- Profile section with glass card -->
           <li>
             <a
               href="./pages/profile.html"
@@ -183,5 +187,18 @@
 
     <section class="min-h-dvh bg-green-300"></section>
     <section class="min-h-dvh bg-green-300"></section>
+
+    <footer class="flex justify-between w-full py-18 px-12 bg-white">
+      <div class="flex flex-col gap-y-2">
+        <div class="flex items-center gap-x-1">
+          <img class="w-24 h-full" src="./public/img/logo.png" alt="">
+          <h1 class="text-5xl font-bold">Naturia</h1>
+        </div>
+        <div class="max-w-xl">
+            <p class="text-xl font-medium text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam cum ut porro assumenda illo eaque sequi architecto, laboriosam illum modi.</p>
+            <p class="text-xl font-medium text-justify"></p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

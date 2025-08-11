@@ -136,3 +136,152 @@
 .anim-pop {
   animation: pop 0.18s ease-out;
 }
+
+.animated-text {
+  animation: twilight-rainbow 5s infinite alternate;
+}
+
+@keyframes twilight-rainbow {
+  0% {
+    color: rgb(186, 85, 211);
+  }
+  20% {
+    color: rgb(123, 104, 238);
+  }
+  40% {
+    color: rgb(72, 209, 204);
+  }
+  60% {
+    color: rgb(60, 179, 113);
+  }
+  80% {
+    color: rgb(255, 140, 0);
+  }
+  100% {
+    color: rgb(220, 20, 60);
+  }
+}
+
+
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--progress-width);
+  }
+}
+
+.animate-slide-up {
+  animation: slideInUp 0.8s ease-out forwards;
+}
+
+.animate-slide-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-slide-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.8s ease-out forwards;
+}
+
+.animate-progress {
+  animation: progressFill 2s ease-out 1s forwards;
+  width: 0%;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .grid-item-1,
+  .grid-item-2,
+  .grid-item-3,
+  .grid-item-4,
+  .grid-item-5,
+  .grid-item-6 {
+    grid-area: auto;
+  }
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+}
+
+.skill-progress {
+  --progress-width: 0%;
+}
+
+.skill-progress[data-progress="95"] {
+  --progress-width: 95%;
+}
+.skill-progress[data-progress="88"] {
+  --progress-width: 88%;
+}
+.skill-progress[data-progress="92"] {
+  --progress-width: 92%;
+}
+.skill-progress[data-progress="78"] {
+  --progress-width: 78%;
+}
