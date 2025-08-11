@@ -1,6 +1,8 @@
 // navbar-component
 document.addEventListener("DOMContentLoaded", () => {
-  document.body.insertAdjacentHTML("afterbegin", `
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    `
     <nav
       id="navbar"
       class="fixed top-2 sm:top-3 md:top-4 left-1/2 z-50 w-[95%] sm:w-[90%] md:w-full max-w-3xl sm:max-w-4xl md:max-w-6xl px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-white/20 backdrop-blur-xl shadow-2xl shadow-black/10 rounded-2xl sm:rounded-xl md:rounded-xl border border-white/30 transition-all duration-600 ease-in-out"
@@ -12,9 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     >
       <!-- Desktop & Mobile Header -->
       <div class="flex items-center justify-between w-full">
-        <div class="text-base sm:text-lg md:text-xl font-bold text-gray-800">
+        <a href="/index.html" class="flex items-center gap-x-2 text-base sm:text-lg md:text-xl font-bold text-gray-800">
+        <img src="/public/img/logo.png" class="w-10 h-10"></img>
           Naturia
-        </div>
+        </a>
 
         <!-- Desktop Menu -->
         <ul
@@ -169,88 +172,89 @@ document.addEventListener("DOMContentLoaded", () => {
         </ul>
       </div>
     </nav>
-  `);
+  `
+  );
 });
 
 // JS untuk navbarnya
-  document.addEventListener('DOMContentLoaded', function() {
-          const navbar = document.querySelector('nav');
-          const mobileMenuButton = document.getElementById('mobile-menu-button');
-          const mobileMenu = document.getElementById('mobile-menu');
-          const hamburgerLines = document.querySelectorAll('.hamburger-line');
-          let isScrolled = false;
-          let isMobileMenuOpen = false;
+document.addEventListener("DOMContentLoaded", function () {
+  const navbar = document.querySelector("nav");
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const hamburgerLines = document.querySelectorAll(".hamburger-line");
+  let isScrolled = false;
+  let isMobileMenuOpen = false;
 
-          // Scroll functionality with responsive sizing
-          window.addEventListener('scroll', function() {
-              const scrollY = window.scrollY;
-              
-              if (scrollY > 50 && !isScrolled) {
-                  // Smaller sizes on scroll
-                  navbar.classList.remove('max-w-3xl', 'sm:max-w-4xl', 'md:max-w-6xl');
-                  navbar.classList.add('max-w-2xl', 'sm:max-w-3xl', 'md:max-w-5xl');
-                  navbar.style.transform = 'translateX(-50%) scale(0.95)';
-                  isScrolled = true;
-              } else if (scrollY <= 50 && isScrolled) {
-                  // Original sizes
-                  navbar.classList.remove('max-w-2xl', 'sm:max-w-3xl', 'md:max-w-5xl');
-                  navbar.classList.add('max-w-3xl', 'sm:max-w-4xl', 'md:max-w-6xl');
-                  navbar.style.transform = 'translateX(-50%) scale(1)';
-                  isScrolled = false;
-              }
-          });
+  // Scroll functionality with responsive sizing
+  window.addEventListener("scroll", function () {
+    const scrollY = window.scrollY;
 
-          // Mobile menu toggle
-          mobileMenuButton.addEventListener('click', function() {
-              isMobileMenuOpen = !isMobileMenuOpen;
-              
-              if (isMobileMenuOpen) {
-                  // Open menu with liquid glass effect
-                  mobileMenu.classList.remove('opacity-0', 'invisible', 'scale-95');
-                  mobileMenu.classList.add('opacity-100', 'visible', 'scale-100');
-                  
-                  // Animate hamburger to X
-                  const isMobile = window.innerWidth < 640;
-                  const translateValue = isMobile ? '3px' : '4px';
-                  
-                  hamburgerLines[0].style.transform = `rotate(45deg) translate(${translateValue}, ${translateValue})`;
-                  hamburgerLines[1].style.opacity = '0';
-                  hamburgerLines[1].style.transform = 'translateX(10px)';
-                  hamburgerLines[2].style.transform = `rotate(-45deg) translate(${translateValue}, -${translateValue})`;
-              } else {
-                  // Close menu
-                  mobileMenu.classList.remove('opacity-100', 'visible', 'scale-100');
-                  mobileMenu.classList.add('opacity-0', 'invisible', 'scale-95');
-                  
-                  // Animate X back to hamburger
-                  hamburgerLines[0].style.transform = 'rotate(0) translate(0, 0)';
-                  hamburgerLines[1].style.opacity = '1';
-                  hamburgerLines[1].style.transform = 'translateX(0)';
-                  hamburgerLines[2].style.transform = 'rotate(0) translate(0, 0)';
-              }
-          });
+    if (scrollY > 50 && !isScrolled) {
+      // Small
+      navbar.classList.remove("max-w-3xl", "sm:max-w-4xl", "md:max-w-6xl");
+      navbar.classList.add("max-w-2xl", "sm:max-w-3xl", "md:max-w-5xl");
+      navbar.style.transform = "translateX(-50%) scale(0.95)";
+      isScrolled = true;
+    } else if (scrollY <= 50 && isScrolled) {
+      // Original
+      navbar.classList.remove("max-w-2xl", "sm:max-w-3xl", "md:max-w-5xl");
+      navbar.classList.add("max-w-3xl", "sm:max-w-4xl", "md:max-w-6xl");
+      navbar.style.transform = "translateX(-50%) scale(1)";
+      isScrolled = false;
+    }
+  });
 
-          // Close menu when clicking on a link
-          const mobileLinks = mobileMenu.querySelectorAll('a');
-          mobileLinks.forEach(link => {
-              link.addEventListener('click', function() {
-                  if (isMobileMenuOpen) {
-                      mobileMenuButton.click();
-                  }
-              });
-          });
+  // Mobile menu toggle
+  mobileMenuButton.addEventListener("click", function () {
+    isMobileMenuOpen = !isMobileMenuOpen;
 
-          // Close menu when clicking outside
-          document.addEventListener('click', function(e) {
-              if (isMobileMenuOpen && !navbar.contains(e.target)) {
-                  mobileMenuButton.click();
-              }
-          });
+    if (isMobileMenuOpen) {
+      // Open menu with liquid glass effect
+      mobileMenu.classList.remove("opacity-0", "invisible", "scale-95");
+      mobileMenu.classList.add("opacity-100", "visible", "scale-100");
 
-          // Handle window resize
-          window.addEventListener('resize', function() {
-              if (window.innerWidth >= 768 && isMobileMenuOpen) {
-                  mobileMenuButton.click();
-              }
-          });
-      });
+      // Animate hamburger to X
+      const isMobile = window.innerWidth < 640;
+      const translateValue = isMobile ? "3px" : "4px";
+
+      hamburgerLines[0].style.transform = `rotate(45deg) translate(${translateValue}, ${translateValue})`;
+      hamburgerLines[1].style.opacity = "0";
+      hamburgerLines[1].style.transform = "translateX(10px)";
+      hamburgerLines[2].style.transform = `rotate(-45deg) translate(${translateValue}, -${translateValue})`;
+    } else {
+      // Close menu
+      mobileMenu.classList.remove("opacity-100", "visible", "scale-100");
+      mobileMenu.classList.add("opacity-0", "invisible", "scale-95");
+
+      // Animate X back to hamburger
+      hamburgerLines[0].style.transform = "rotate(0) translate(0, 0)";
+      hamburgerLines[1].style.opacity = "1";
+      hamburgerLines[1].style.transform = "translateX(0)";
+      hamburgerLines[2].style.transform = "rotate(0) translate(0, 0)";
+    }
+  });
+
+  // Close menu when clicking on a link
+  const mobileLinks = mobileMenu.querySelectorAll("a");
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", function () {
+      if (isMobileMenuOpen) {
+        mobileMenuButton.click();
+      }
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener("click", function (e) {
+    if (isMobileMenuOpen && !navbar.contains(e.target)) {
+      mobileMenuButton.click();
+    }
+  });
+
+  // Handle window resize
+  window.addEventListener("resize", function () {
+    if (window.innerWidth >= 768 && isMobileMenuOpen) {
+      mobileMenuButton.click();
+    }
+  });
+});

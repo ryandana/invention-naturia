@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Marketplace (Tailwind v4)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/global.css" />
+    <style type="text/tailwindcss">
+      @theme {
+        --color-volcano-red: #c53030;
+        --color-ash-gray: #2d3748;
+        --color-lava-orange: #ed8936;
+        --color-earth-cream: #fffaf0;
+        --color-forest-green: #38a169;
+        --color-warm-gray: #f7fafc;
+        --color-dark-gray: #4a5568;
+      }
+    </style>
+  </head>
+  <body class="bg-warm-gray min-h-screen text-sm">
+    <script src="/components/navbar.js"></script>
+    <button
+      id="cartToggle"
+      class="fixed bottom-6 right-6 z-50 bg-volcano-red hover:bg-volcano-red/90 text-white p-4 rounded-2xl shadow-lg transition-all duration-300"
+      aria-label="Toggle shopping cart"
+    >
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h12"
+        ></path>
+      </svg>
+      <span
+        id="cartCount"
+        class="absolute -top-2 -right-2 bg-lava-orange text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold"
+        >0</span
+      >
+    </button>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12">
+      <!-- Hero -->
+      <header
+        class="text-center mb-12 rounded-2xl p-8 mx-4 bg-white/60 backdrop-blur-sm border border-white/40"
+      >
+        <h1 class="text-5xl font-bold text-volcano-red mb-4">Marketplace</h1>
+        <p class="text-dark-gray text-lg max-w-2xl mx-auto">
+          Temukan produk daur ulang berkualitas. Marketplace ramah lingkungan
+          untuk masa depan yang berkelanjutan.
+        </p>
+      </header>
+
+      <!-- Category Filter -->
+      <section class="mb-8">
+        <div class="flex flex-wrap justify-center gap-4">
+          <button
+            onclick="filterProducts('all', this)"
+            class="category-btn px-6 py-3 bg-volcano-red text-white rounded-2xl hover:bg-volcano-red/90 transition-all duration-300 font-semibold shadow-sm"
+          >
+            Semua Produk
+          </button>
+          <button
+            onclick="filterProducts('furniture', this)"
+            class="category-btn px-6 py-3 bg-white text-dark-gray rounded-2xl hover:bg-volcano-red hover:text-white transition-all duration-300 font-semibold shadow-sm"
+          >
+            Furniture
+          </button>
+          <button
+            onclick="filterProducts('fashion', this)"
+            class="category-btn px-6 py-3 bg-white text-dark-gray rounded-2xl hover:bg-volcano-red hover:text-white transition-all duration-300 font-semibold shadow-sm"
+          >
+            Fashion
+          </button>
+          <button
+            onclick="filterProducts('home', this)"
+            class="category-btn px-6 py-3 bg-white text-dark-gray rounded-2xl hover:bg-volcano-red hover:text-white transition-all duration-300 font-semibold shadow-sm"
+          >
+            Rumah Tangga
+          </button>
+          <button
+            onclick="filterProducts('garden', this)"
+            class="category-btn px-6 py-3 bg-white text-dark-gray rounded-2xl hover:bg-volcano-red hover:text-white transition-all duration-300 font-semibold shadow-sm"
+          >
+            Taman
+          </button>
+        </div>
+      </section>
+
+      <!-- Product Grid -->
+      <section
+        id="products"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+        aria-label="Product listing"
+      >
+        <!-- rendered by JS -->
+      </section>
+    </div>
+
+    <!-- Cart Sidebar (initially off-screen using translate-x-full) -->
+    <aside
+      id="cart"
+      class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out"
+      aria-label="Shopping cart"
+    >
+      <div class="p-6 h-full flex flex-col">
+        <div
+          class="flex justify-between items-center mb-6 border-b border-gray-200 pb-4"
+        >
+          <h2 class="text-2xl font-bold text-ash-gray">Keranjang Anda</h2>
+          <button
+            id="closeCart"
+            class="text-dark-gray hover:text-volcano-red bg-gray-100 hover:bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300"
+            aria-label="Tutup keranjang"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div id="cartItems" class="flex-1 overflow-y-auto space-y-4">
+          <!-- cart items -->
+        </div>
+
+        <div class="border-t border-gray-200 pt-4 mt-4">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-lg font-semibold text-ash-gray">Total:</span>
+            <span id="cartTotal" class="text-xl font-bold text-forest-green"
+              >Rp 0</span
+            >
+          </div>
+          <button
+            id="checkoutBtn"
+            class="w-full bg-volcano-red text-white py-3 px-6 rounded-2xl font-semibold hover:bg-volcano-red/90 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
+          >
+            Lanjut ke Checkout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Cart Overlay -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+    <!-- Checkout Page (fade in/out using opacity + translate) -->
+    <section
+      id="checkout"
+      class="fixed inset-0 bg-warm-gray z-30 p-6 overflow-y-auto opacity-0 translate-y-5 pointer-events-none transition-all duration-300"
+    >
+      <div class="container mx-auto max-w-4xl">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold text-ash-gray">Checkout</h2>
+          <button
+            id="backToShopping"
+            class="text-dark-gray hover:text-volcano-red bg-white hover:bg-gray-100 rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 shadow-sm"
+            aria-label="Kembali berbelanja"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200"
+          >
+            <h3 class="text-xl font-bold text-ash-gray mb-4">
+              Ringkasan Pesanan
+            </h3>
+            <div id="checkoutItems" class="space-y-3 mb-4"></div>
+            <div class="border-t border-gray-200 pt-4">
+              <div
+                class="flex justify-between text-lg font-bold text-forest-green"
+              >
+                <span>Total:</span>
+                <span id="checkoutTotal">Rp 0</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200"
+          >
+            <h3 class="text-xl font-bold text-ash-gray mb-4">
+              Informasi Pengiriman
+            </h3>
+            <form id="checkoutForm" class="space-y-4">
+              <div class="grid gap-4">
+                <div>
+                  <label
+                    for="firstName"
+                    class="block text-sm font-medium text-dark-gray mb-1"
+                    >Nama Lengkap</label
+                  >
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    required
+                    class="w-full px-3 py-2 bg-white border-2 border-gray-300 rounded-2xl focus:border-volcano-red focus:outline-none transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-dark-gray mb-1"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full px-3 py-2 bg-white border-2 border-gray-300 rounded-2xl focus:border-volcano-red focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="address"
+                  class="block text-sm font-medium text-dark-gray mb-1"
+                  >Alamat</label
+                >
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  required
+                  class="w-full px-3 py-2 bg-white border-2 border-gray-300 rounded-2xl focus:border-volcano-red focus:outline-none transition-colors"
+                />
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <div>
+                  <label
+                    for="city"
+                    class="block text-sm font-medium text-dark-gray mb-1"
+                    >Kota</label
+                  >
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    required
+                    class="w-full px-3 py-2 bg-white border-2 border-gray-300 rounded-2xl focus:border-volcano-red focus:outline-none transition-colors"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="state"
+                    class="block text-sm font-medium text-dark-gray mb-1"
+                    >Provinsi</label
+                  >
+                  <select
+                    id="state"
+                    name="state"
+                    required
+                    class="w-full px-3 py-2 bg-white border-2 border-gray-300 rounded-2xl focus:border-volcano-red focus:outline-none transition-colors"
+                  >
+                    <option value="">Pilih Provinsi</option>
+                    <option value="Bali">Bali</option>
+                    <option value="Jakarta">Jakarta</option>
+                    <option value="Jawa Barat">Jawa Barat</option>
+                    <option value="Jawa Tengah">Jawa Tengah</option>
+                    <option value="Jawa Timur">Jawa Timur</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    for="zip"
+                    class="block text-sm font-medium text-dark-gray mb-1"
+                    >Kode Pos</label
+                  >
+                  <input
+                    type="text"
+                    id="zip"
+                    name="zip"
+                    required
+                    class="w-full px-3 py-2 bg-white border-2 border-gray-300 rounded-2xl focus:border-volcano-red focus:outline-none transition-colors"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full bg-volcano-red text-white py-4 px-6 rounded-2xl font-bold text-lg hover:bg-volcano-red/90 transition-colors shadow-lg mt-6"
+              >
+                🌋 Buat Pesanan
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Preview Modal -->
+    <div id="productModal" class="fixed inset-0 z-60 hidden">
+      <div
+        class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onclick="closeProductModal()"
+      ></div>
+      <div class="relative flex items-center justify-center min-h-screen p-4">
+        <div
+          class="bg-white border border-white/30 rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden"
+        >
+          <div>
+            <div class="relative">
+              <button
+                onclick="closeProductModal()"
+                class="absolute top-4 right-4 cursor-pointer z-20 bg-volcano-red text-white w-10 h-10 rounded-full flex items-center justify-center hover:opacity-95 transition-all duration-300"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+              <img
+                id="modalImage"
+                src=""
+                alt=""
+                class="w-full h-64 object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"
+              ></div>
+            </div>
+            <div class="p-8">
+              <div class="mb-4">
+                <span
+                  id="modalCategory"
+                  class="inline-block px-3 py-1 bg-lava-orange text-white text-sm rounded-full font-medium shadow-sm"
+                ></span>
+              </div>
+              <h2
+                id="modalTitle"
+                class="text-2xl font-bold text-volcano-red mb-4"
+              ></h2>
+              <p
+                id="modalDescription"
+                class="text-ash-gray mb-6 leading-relaxed"
+              ></p>
+              <div class="flex items-center justify-between">
+                <span
+                  id="modalPrice"
+                  class="text-3xl font-bold text-forest-green"
+                ></span>
+                <button
+                  id="modalAddToCart"
+                  class="bg-volcano-red text-white px-8 py-3 rounded-2xl font-semibold hover:opacity-95 transition-all duration-300 shadow-lg"
+                >
+                  Tambah ke Keranjang
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS: products + cart logic (mostly your original logic, updated for Tailwind class toggles) -->
+    <script>
+      const products = [
+        {
+          id: 1,
+          name: "Meja Kayu Palet Bekas",
+          price: 450000,
+          category: "furniture",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Crect x='50' y='80' width='200' height='80' fill='%236A8E4E' rx='8'/%3E%3Crect x='70' y='100' width='160' height='8' fill='%23992E1A'/%3E%3Crect x='70' y='120' width='160' height='8' fill='%23992E1A'/%3E%3Crect x='70' y='140' width='160' height='8' fill='%23992E1A'/%3E%3Ctext x='150' y='50' text-anchor='middle' font-size='16' fill='%23992E1A'%3E♻️ MEJA%3C/text%3E%3C/svg%3E",
+          description:
+            "Meja unik dari kayu palet bekas dengan finishing natural. Ramah lingkungan dan tahan lama. Cocok untuk ruang kerja modern dengan sentuhan rustic.",
+        },
+        {
+          id: 2,
+          name: "Tas Tote Kain Bekas",
+          price: 85000,
+          category: "fashion",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Cpath d='M100 60 L100 160 L200 160 L200 60 Z' fill='%234C4C4C'/%3E%3Cpath d='M110 50 L110 70 M190 50 L190 70' stroke='%23992E1A' stroke-width='6' stroke-linecap='round'/%3E%3Ctext x='150' y='30' text-anchor='middle' font-size='12' fill='%23992E1A'%3E♻️ TAS TOTE%3C/text%3E%3C/svg%3E",
+          description:
+            "Tas tote stylish dari kain bekas berkualitas tinggi. Design minimalis dengan daya tahan maksimal. Perfect untuk daily use yang eco-friendly.",
+        },
+        {
+          id: 3,
+          name: "Pot Tanaman Botol Plastik",
+          price: 25000,
+          category: "garden",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Cpath d='M130 50 L130 40 Q130 30 140 30 L160 30 Q170 30 170 40 L170 50 L180 60 L180 150 Q180 160 170 160 L130 160 Q120 160 120 150 L120 60 Z' fill='%236A8E4E'/%3E%3Ccircle cx='150' cy='110' r='15' fill='%23992E1A'/%3E%3Ctext x='150' y='20' text-anchor='middle' font-size='12' fill='%23992E1A'%3E♻️ POT%3C/text%3E%3C/svg%3E",
+          description:
+            "Pot tanaman kreatif dari botol plastik bekas. Dilengkapi sistem drainase yang baik. Solusi berkebun ramah lingkungan untuk ruang terbatas.",
+        },
+        {
+          id: 4,
+          name: "Lampu Hias Kaca Bekas",
+          price: 175000,
+          category: "home",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Ccircle cx='150' cy='100' r='50' fill='%23D97424' fill-opacity='0.6'/%3E%3Ccircle cx='150' cy='100' r='30' fill='%23992E1A' fill-opacity='0.8'/%3E%3Cline x1='150' y1='50' x2='150' y2='30' stroke='%23992E1A' stroke-width='3'/%3E%3Ctext x='150' y='20' text-anchor='middle' font-size='12' fill='%23992E1A'%3E♻️ LAMPU%3C/text%3E%3C/svg%3E",
+          description:
+            "Lampu hias unik dari kaca bekas dengan efek pencahayaan yang memukau. Memberikan suasana hangat dan cozy untuk interior modern.",
+        },
+        {
+          id: 5,
+          name: "Kursi Ban Bekas Motor",
+          price: 320000,
+          category: "furniture",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Ccircle cx='150' cy='120' r='40' fill='%234C4C4C'/%3E%3Ccircle cx='150' cy='120' r='20' fill='%23F4F1E7'/%3E%3Crect x='130' y='80' width='40' height='40' fill='%23992E1A' rx='20'/%3E%3Ctext x='150' y='50' text-anchor='middle' font-size='12' fill='%23992E1A'%3E♻️ KURSI%3C/text%3E%3C/svg%3E",
+          description:
+            "Kursi industrial dari ban motor bekas dengan sandaran ergonomis. Design unique yang menggabungkan kekuatan dan kenyamanan.",
+        },
+        {
+          id: 6,
+          name: "Jaket Denim Upcycled",
+          price: 285000,
+          category: "fashion",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Cpath d='M120 60 L120 160 L180 160 L180 60 L170 50 L130 50 Z' fill='%234C4C4C'/%3E%3Cpath d='M140 70 L140 90 M160 70 L160 90' stroke='%23D97424' stroke-width='3'/%3E%3Ctext x='150' y='40' text-anchor='middle' font-size='12' fill='%23992E1A'%3E♻️ JAKET%3C/text%3E%3C/svg%3E",
+          description:
+            "Jaket denim stylish hasil upcycling dengan detail custom yang menarik. Kualitas premium dengan gaya sustainable fashion terkini.",
+        },
+        {
+          id: 7,
+          name: "Rak Buku Kayu Palet",
+          price: 380000,
+          category: "furniture",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Crect x='80' y='60' width='140' height='100' fill='%236A8E4E'/%3E%3Cline x1='85' y1='90' x2='215' y2='90' stroke='%23992E1A' stroke-width='2'/%3E%3Cline x1='85' y1='120' x2='215' y2='120' stroke='%23992E1A' stroke-width='2'/%3E%3Ctext x='150' y='45' text-anchor='middle' font-size='12' fill='%23992E1A'%3E♻️ RAK BUKU%3C/text%3E%3C/svg%3E",
+          description:
+            "Rak buku multifungsi dari palet kayu bekas. Design minimalis dengan kapasitas penyimpanan optimal untuk koleksi buku dan dekorasi.",
+        },
+        {
+          id: 8,
+          name: "Tempat Pensil Kaleng Bekas",
+          price: 35000,
+          category: "home",
+          image:
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23F4F1E7'/%3E%3Crect x='130' y='80' width='40' height='80' fill='%23D97424' rx='20'/%3E%3Cline x1='135' y1='60' x2='135' y2='80' stroke='%23992E1A' stroke-width='2'/%3E%3Cline x1='150' y1='60' x2='150' y2='80' stroke='%23992E1A' stroke-width='2'/%3E%3Cline x1='165' y1='60' x2='165' y2='80' stroke='%23992E1A' stroke-width='2'/%3E%3Ctext x='150' y='50' text-anchor='middle' font-size='10' fill='%23992E1A'%3E♻️ TEMPAT PENSIL%3C/text%3E%3C/svg%3E",
+          description:
+            "Tempat pensil lucu dari kaleng bekas dengan dekorasi menarik. Solusi praktis untuk mengorganisir alat tulis dengan gaya eco-friendly.",
+        },
+      ];
+
+      let cart = [];
+      let currentFilter = "all";
+
+      // DOM refs
+      const productsContainer = document.getElementById("products");
+      const cartSidebar = document.getElementById("cart");
+      const cartOverlay = document.getElementById("cartOverlay");
+      const cartToggle = document.getElementById("cartToggle");
+      const closeCart = document.getElementById("closeCart");
+      const cartItems = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+      const cartCount = document.getElementById("cartCount");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      const checkoutPage = document.getElementById("checkout");
+      const backToShopping = document.getElementById("backToShopping");
+      const checkoutItems = document.getElementById("checkoutItems");
+      const checkoutTotal = document.getElementById("checkoutTotal");
+      const productModal = document.getElementById("productModal");
+
+      const categoryNames = {
+        furniture: "Furniture",
+        fashion: "Fashion",
+        home: "Rumah Tangga",
+        garden: "Taman",
+      };
+
+      // Format currency
+      function formatCurrency(amount) {
+        return new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(amount);
+      }
+
+      // Render products
+      function renderProducts() {
+        const filteredProducts =
+          currentFilter === "all"
+            ? products
+            : products.filter((p) => p.category === currentFilter);
+        productsContainer.innerHTML = filteredProducts
+          .map(
+            (product) => `
+        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer">
+          <div class="relative overflow-hidden" onclick="showProductModal(${
+            product.id
+          })">
+            <img src="${product.image}" alt="${
+              product.name
+            }" class="w-full h-48 object-cover transition-transform duration-300">
+            <div class="absolute top-4 left-4">
+              <span class="px-3 py-1 bg-lava-orange text-white text-xs rounded-full font-medium shadow-sm">${
+                categoryNames[product.category]
+              }</span>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20">
+              <div class="bg-white text-volcano-red px-4 py-2 rounded-2xl font-semibold shadow-lg">Lihat Detail</div>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-ash-gray mb-2">${
+              product.name
+            }</h3>
+            <p class="text-dark-gray text-sm mb-4 line-clamp-2">${
+              product.description
+            }</p>
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold text-forest-green">${formatCurrency(
+                product.price
+              )}</span>
+              <button onclick="addToCart(${
+                product.id
+              })" class="text-white cursor-pointer rounded-full transition-colors shadow-sm font-semibold" aria-label="Tambah ${
+              product.name
+            } ke keranjang">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#c53030" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+            </svg> 
+            </button>
+            </div>
+          </div>
+        </div>
+      `
+          )
+          .join("");
+      }
+
+      // Show product modal
+      function showProductModal(productId) {
+        const product = products.find((p) => p.id === productId);
+        if (!product) return;
+        document.getElementById("modalImage").src = product.image;
+        document.getElementById("modalImage").alt = product.name;
+        document.getElementById("modalCategory").textContent =
+          categoryNames[product.category];
+        document.getElementById("modalTitle").textContent = product.name;
+        document.getElementById("modalDescription").textContent =
+          product.description;
+        document.getElementById("modalPrice").textContent = formatCurrency(
+          product.price
+        );
+        document.getElementById("modalAddToCart").onclick = () => {
+          addToCart(productId);
+          closeProductModal();
+        };
+        productModal.classList.remove("hidden");
+        document.body.classList.add("overflow-hidden");
+      }
+      function closeProductModal() {
+        productModal.classList.add("hidden");
+        document.body.classList.remove("overflow-hidden");
+      }
+
+      // Cart functions
+      function addToCart(productId) {
+        const product = products.find((p) => p.id === productId);
+        const existing = cart.find((i) => i.id === productId);
+        if (existing) existing.quantity += 1;
+        else cart.push({ ...product, quantity: 1 });
+        updateCartUI();
+      }
+      function removeFromCart(productId) {
+        cart = cart.filter((i) => i.id !== productId);
+        updateCartUI();
+      }
+      function updateCartUI() {
+        const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+        const totalPrice = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+        cartCount.textContent = totalItems;
+        cartTotal.textContent = formatCurrency(totalPrice);
+        checkoutTotal.textContent = formatCurrency(totalPrice);
+        checkoutBtn.disabled = cart.length === 0;
+
+        cartItems.innerHTML = cart
+          .map(
+            (item) => `
+        <div class="bg-gray-50 border border-gray-200 p-4 rounded-2xl flex items-center space-x-4">
+          <img src="${item.image}" alt="${
+              item.name
+            }" class="w-16 h-16 rounded-xl object-cover border border-gray-200">
+          <div class="flex-1">
+            <h4 class="font-semibold text-ash-gray text-sm">${item.name}</h4>
+            <p class="text-dark-gray text-sm">Qty: ${item.quantity}</p>
+            <p class="text-forest-green font-bold">${formatCurrency(
+              item.price * item.quantity
+            )}</p>
+          </div>
+          <button onclick="removeFromCart(${
+            item.id
+          })" class="text-volcano-red hover:text-volcano-red/70 bg-red-50 hover:bg-red-100 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-300" aria-label="Hapus ${
+              item.name
+            }">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      `
+          )
+          .join("");
+
+        checkoutItems.innerHTML = cart
+          .map(
+            (item) => `
+        <div class="flex justify-between items-center py-2">
+          <span class="text-dark-gray">${item.name} (${item.quantity}x)</span>
+          <span class="font-semibold text-forest-green">${formatCurrency(
+            item.price * item.quantity
+          )}</span>
+        </div>
+      `
+          )
+          .join("");
+      }
+
+      // Toggle cart (translate-x)
+      function toggleCart() {
+        cartSidebar.classList.toggle("translate-x-full");
+        cartSidebar.classList.toggle("translate-x-0");
+        cartOverlay.classList.toggle("hidden");
+        document.body.classList.toggle("overflow-hidden");
+      }
+
+      function showCheckout() {
+        // show checkout overlay
+        checkoutPage.classList.remove("pointer-events-none");
+        checkoutPage.classList.add("opacity-100");
+        checkoutPage.classList.add("translate-y-0");
+        checkoutPage.classList.remove("opacity-0");
+        checkoutPage.classList.remove("translate-y-5");
+        // hide cart
+        if (!cartSidebar.classList.contains("translate-x-full")) {
+          toggleCart();
+        }
+      }
+
+      function hideCheckout() {
+        checkoutPage.classList.add("opacity-0");
+        checkoutPage.classList.add("translate-y-5");
+        checkoutPage.classList.remove("opacity-100");
+        checkoutPage.classList.remove("translate-y-0");
+        checkoutPage.classList.add("pointer-events-none");
+      }
+
+      // Category filter: pass element so we can toggle active classes via JS
+      function filterProducts(category, el) {
+        currentFilter = category;
+        document.querySelectorAll(".category-btn").forEach((btn) => {
+          btn.classList.remove("bg-volcano-red", "text-white");
+          btn.classList.add("bg-white", "text-dark-gray");
+        });
+        if (el) {
+          el.classList.remove("bg-white", "text-dark-gray");
+          el.classList.add("bg-volcano-red", "text-white");
+        }
+        renderProducts();
+      }
+
+      // Event listeners
+      cartToggle.addEventListener("click", toggleCart);
+      closeCart.addEventListener("click", toggleCart);
+      cartOverlay.addEventListener("click", toggleCart);
+      checkoutBtn.addEventListener("click", showCheckout);
+      backToShopping.addEventListener("click", hideCheckout);
+
+      document
+        .getElementById("checkoutForm")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          alert(
+            "🌋 Pesanan berhasil dibuat! Produk daur ulang vulkanik Anda sedang dalam proses pengiriman!"
+          );
+          cart = [];
+          updateCartUI();
+          hideCheckout();
+        });
+
+      // Init
+      renderProducts();
+      updateCartUI();
+    </script>
+  </body>
+</html>
