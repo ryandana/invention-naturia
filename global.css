@@ -80,6 +80,22 @@
   overflow: hidden;
 }
 
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.floating {
+  animation: floatUpDown 2s ease-in-out infinite;
+}
+
 @keyframes navbarEntrance {
   0% {
     opacity: 0;
@@ -161,8 +177,6 @@
     color: rgb(220, 20, 60);
   }
 }
-
-
 
 @keyframes slideInUp {
   from {

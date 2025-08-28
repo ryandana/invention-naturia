@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <a href="./profile.html">
               <img
                 src="../public/img/pfp.jpeg"
-                class="w-10 h-10 lg:w-10 lg:h-10 rounded-full hover:scale-110 transition-transform duration-300 ring-2 ring-white/30"
+                class="w-10 h-10 lg:w-10 lg:h-10 rounded-full transition-transform duration-300 ring-2 ring-white/30"
                 alt="pfp"
               />
               </a>
