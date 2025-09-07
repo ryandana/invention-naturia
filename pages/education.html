@@ -1,16 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Challenge</title>
-   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoEdu - Edukasi Lingkungan</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="../global.css" />
     <script src="../components/navbar.js"></script>
-    <script src=""></script>
-</head>
-<body>
-    
-    
-</body>
+  </head>
+  <body
+    class="bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 min-h-screen"
+  >
+    <!-- Kategory-->
+    <section class="mb-6 pt-36 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-wrap justify-center gap-3">
+          <!-- Aktif -->
+          <span
+            class="px-4 py-2 rounded-full bg-green-500 text-white font-medium border border-green-600 cursor-pointer hover:bg-green-600 hover:shadow-md active:scale-95 transition-all duration-200"
+          >
+            Semua
+          </span>
+          <!-- Gak Aktif -->
+          <span
+            class="px-4 py-2 rounded-full bg-green-50 text-green-700 font-medium border border-green-300 cursor-pointer hover:bg-green-100 hover:shadow-md active:scale-95 transition-all duration-200"
+          >
+            Reboisasi
+          </span>
+
+
+          <!-- Gak aktif -->
+          <span
+            class="px-4 py-2 rounded-full bg-green-50 text-green-700 font-medium border border-green-300 cursor-pointer hover:bg-green-100 hover:shadow-md active:scale-95 transition-all duration-200"
+          >
+            Energi Terbarukan
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div
+            class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div class="w-full flex overflow-hidden">
+              <img
+                class="lg:h-[250px] md:h-[200px] sm:h-[150px] w-full object-cover"
+                src="https://picsum.photos/seed/picsum/1920/1080"
+                alt=""
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span
+                  class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-medium"
+                  >#reboisasi</span
+                >
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 mb-3">
+                Pentingnya Reboisasi untuk Masa Depan
+              </h3>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                Reboisasi adalah kunci untuk mengatasi perubahan iklim. Setiap
+                pohon yang ditanam dapat menyerap 22kg CO2 per tahun dan
+                menghasilkan oksigen untuk 2 orang.
+              </p>
+              <button
+                class="text-green-600 font-medium text-sm hover:text-green-700 hover:underline mt-auto"
+              >
+                Baca Selengkapnya →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
