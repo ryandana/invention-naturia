@@ -4,29 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const hamburgerLines = document.querySelectorAll(".hamburger-line");
-  let isScrolled = false;
   let isMobileMenuOpen = false;
 
-  // Scroll functionality with responsive sizing
-  window.addEventListener("scroll", function () {
-    const scrollY = window.scrollY;
-
-    if (scrollY > 50 && !isScrolled) {
-      // Small
-      navbar.classList.remove("max-w-3xl", "sm:max-w-4xl", "md:max-w-6xl");
-      navbar.classList.add("max-w-2xl", "sm:max-w-3xl", "md:max-w-5xl");
-      navbar.style.transform = "translateX(-50%) scale(0.95)";
-      isScrolled = true;
-    } else if (scrollY <= 50 && isScrolled) {
-      // Original
-      navbar.classList.remove("max-w-2xl", "sm:max-w-3xl", "md:max-w-5xl");
-      navbar.classList.add("max-w-3xl", "sm:max-w-4xl", "md:max-w-6xl");
-      navbar.style.transform = "translateX(-50%) scale(1)";
-      isScrolled = false;
-    }
-  });
-
-  // Mobile menu toggle
+  // Mobile menu
   mobileMenuButton.addEventListener("click", function () {
     isMobileMenuOpen = !isMobileMenuOpen;
 
@@ -37,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Animate hamburger to X
       const isMobile = window.innerWidth < 640;
-      const translateValue = isMobile ? "3px" : "4px";
+      const translateValue = isMobile ? "4px" : "5px";
 
       hamburgerLines[0].style.transform = `rotate(45deg) translate(${translateValue}, ${translateValue})`;
       hamburgerLines[1].style.opacity = "0";
